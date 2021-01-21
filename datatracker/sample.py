@@ -33,4 +33,3 @@ def other_example():
 
     else:
         return render_template('sample/postform.html', page_title="PostForm from Module Function")
-
