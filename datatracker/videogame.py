@@ -9,19 +9,20 @@ def index():
 
     response = requests.get('https://api.dccresource.com/api/games')
     all_games = response.json()
+    recent_games = []
 
-    recent_games = {}
-    for i in range(len(all_games)):
-        if all_games[i]["year"] >= 2013:
-            recent_games.append(all_games[i])
+    for game in all_games:
+        if game["year"] is not None:
+            if game["year"] >= 2013:
+                recent_games.append(game)
 
     console_sales = {}
-    for j in recent_games:
-        platform = recent_games[j]["platform"]
-        if recent_games[j]["platform"] not in console_sales.keys():
-            console_sales[platform] = recent_games[j]["globalSales"]
+    for recent_game in recent_games:
+        platform = recent_game["platform"]
+        if recent_game["platform"] not in console_sales.keys():
+            console_sales[platform] = recent_game["globalSales"]
         else:
-            console_sales[platform] += recent_games[j]["globalSales"]
+            console_sales[platform] += recent_game["globalSales"]
 
 
 
