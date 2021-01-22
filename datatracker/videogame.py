@@ -23,8 +23,5 @@ def index():
             console_sales[platform] = recent_game["globalSales"]
         else:
             console_sales[platform] += recent_game["globalSales"]
-
-
-
-
-    return render_template('videogame/index.html')
+    tester_name = "worked"
+    return render_template('videogame/index.html', tester_name=tester_name)
