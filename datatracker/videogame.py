@@ -34,5 +34,5 @@ def index():
 
     consoleQty = len(console_name)
 
-    return render_template('videogame/index.html', console_name=console_name, console_sales_num=console_sales_num, consoleQty=consoleQty, counter=0)
+    return render_template('videogame/index.html', console_name=console_name, console_sales_num=console_sales_num)
 
