@@ -32,5 +32,7 @@ def index():
         console_name.append(key)
         console_sales_num.append(console_sales[key])
 
-    return render_template('videogame/index.html', console_name=console_name, console_sales_num=console_sales_num)
+    consoleQty = len(console_name)
+
+    return render_template('videogame/index.html', console_name=console_name, console_sales_num=console_sales_num, consoleQty=consoleQty, counter=0)
 
