@@ -23,5 +23,12 @@ def index():
             console_sales[platform] = recent_game["globalSales"]
         else:
             console_sales[platform] += recent_game["globalSales"]
-    tester_name = "worked"
-    return render_template('videogame/index.html', tester_name=tester_name)
+
+    console_name = []
+    console_sales_num = []
+
+    for key in console_sales:
+        console_name.append(key)
+        console_sales_num.append(console_sales[key])
+
+    return render_template('videogame/index.html', console_name=console_name, console_sales_num=console_sales_num)
