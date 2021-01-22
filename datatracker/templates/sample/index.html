@@ -15,11 +15,11 @@
 <br />
 <p>You can even easily utilize logic in these views, similar to razor! Examine the code in 'sample/index.html' to see how this line is being generated:</p>
 {% for letter in word %}
-{% if letter == "o" %}
-<span> {{ letter.capitalize() }} </span>
-{% else %}
-<span> {{ letter }} </span>
-{% endif %}
+    {% if letter == "o" %}
+        <span> {{ letter.capitalize() }} </span>
+    {% else %}
+        <span> {{ letter }} </span>
+    {% endif %}
 {% endfor %}
 <p>(Always remember to close off your ifs and your loops!)</p>
 

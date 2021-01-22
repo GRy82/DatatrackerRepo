@@ -11,8 +11,8 @@ def index():
     all_games = response.json()
 
     recent_games = {}
-    for i in all_games:
-        if all_games[i]['year'] >= 2013:
+    for i in range(len(all_games)):
+        if all_games[i]["year"] >= 2013:
             recent_games.append(all_games[i])
 
     console_sales = {}
