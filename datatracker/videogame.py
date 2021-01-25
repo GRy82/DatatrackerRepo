@@ -34,9 +34,6 @@ def index():
     return render_template('videogame/index.html', console_name=console_name, console_sales_num=console_sales_num)
 
 
-
-
-
 @bp.route('/layout_example')
 def layout_example():
 
