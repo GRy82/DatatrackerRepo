@@ -65,10 +65,36 @@ def index():
         search_user_input = request.form["search_input"]
         for game in all_games:
             if search_user_input in game["name"]:
+                game["consolidated"] = False
                 search_results.append(game)
 
+
+        unique_titles = []
+        for result in search_results:
+            if result["consolidated"] is False:
+                result["consolidated"] = True
+                common_title_dict = {"name": result["name"], "genre": result["genre"],
+                                     "publisher": result["publisher"],
+                                     result["platform"]:
+                                     {"year": result["year"],
+                                     "globalSales": result["globalSales"]}}
+
+                for possible_matches in search_results:
+                    if possible_matches["consolidated"] is False and result["name"] == possible_matches["name"]:
+                        possible_matches["consolidated"] = True
+                        common_title_dict[possible_matches["platform"]] = {"year": possible_matches["year"],
+                                                                           "globalSales":
+                                                                           possible_matches["globalSales"]}
+                unique_titles.append(common_title_dict)
+
+        print("Fuck Brady, Fuck Mahomes")
+
+
+
+
     return render_template('videogame/index.html', console_name=console_name, console_sales_num=console_sales_num,
-                           top_names=top_names, top_qtys=top_qtys, search_results=search_results)
+                           top_names=top_names, top_qtys=top_qtys, search_results=search_results,
+                           unique_titles=unique_titles)
 
 
 
