@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Bootstrap Theme Company</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+
+<body>
+    <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand">Video Games</a>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#about">ABOUT</a></li>
+                        <li><a href="#values">VALUES</a></li>
+                        <li><a href="#add">ADD</a></li>
+                        <li><a href="#update">UPDATE</a></li>
+                        <li><a href="#delete">DELETE</a></li>
+                        <li><a href="#fullLibrary">LIBRARY</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="jumbotron text-center">
+            <br><br>
+            <canvas id="myChart" width="400" height="150"></canvas>
+            <script>
+    var ctx = document.getElementById('myChart');
+    var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels : [{% for item in console_name %}
+             "{{item}}",
+            {% endfor %}],
+        datasets: [{
+            label: 'Console Sales Since 2013',
+            backgroundColor: "rgba(255, 151, 32,0.4)",
+            data: {{console_sales_num}},
+            borderWidth: 1
+        }]
+    },
+    options: {
+        legend: {
+            labels: {
+                fontColor: 'white'
+            }
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+            </script>
+        </div>
+        <div class="container-fluid text-center">
+            <h2>SEARCH BY</h2>
+            <br>
+            <form class="form-inline" id="ByTitle">
+                <div class="col-sm-4">
+                    <h4>Title</h4>
+                    <hr>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="title" name="title" placeholder="Title">
+                    </div>
+                    <br><br><button type="submit" class="btn btn-purple-light">Submit</button>
+                </div>
+            </form>
+            <form class="form-inline" id="ByDire">
+                <div class="col-sm-4">
+                    <h4>Director</h4>
+                    <hr>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="director" name="director" placeholder="Director">
+                    </div>
+                    <br><br><button type="submit" class="btn btn-purple-light">Submit</button>
+                </div>
+            </form>
+            <form class="form-inline" id="ByGenre">
+                <div class="col-sm-4">
+                    <h4>Genre</h4>
+                    <hr>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="genre" name="genre" placeholder="Genre">
+                    </div>
+                    <br><br><button type="submit" class="btn btn-purple-light">Submit</button>
+                </div>
+            </form>
+            <div class="col-sm-12" id="searchResults"><!-- where searched movie results display --></div>
+        </div>
+
+        <div class="container-fluid">
+            <div class="container-fluid text-center bg-grey">
+                <h2>INTERFLIX FAVORITES</h2>
+                <br>
+                <div class="row text-center">
+                    <div class="col-sm-4">
+                        <div class="thumbnail">
+                            <p><strong>Inception</strong></p>
+                            <p>"A dream within a dream"</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="thumbnail">
+                            <p><strong>Pineapple Express</strong></p>
+                            <p>"Don't underestimate us"</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="thumbnail">
+                            <p><strong>Dark Knight</strong></p>
+                            <p>"I'm Batman"</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="add" class="container-fluid">
+            <div class="row">
+                <div class="col-sm-8">
+                    <div>
+                        <h2>Add Movie</h2>
+                        <h4>Add to our fantastic movie library!</h4>
+                        <p>One of the greatest things about movies is that new releases come out all the time. Add your new favorite movie to our library. If it's garbage, someone will remove it soon enough.</p>
+                        <form id="addMovie" class="form-inline">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="title" name="title" placeholder="Title" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="director" name="director"
+                                    placeholder="Director" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="genre" name="genre" placeholder="Genre" required>
+                            </div>
+                            <button type="submit" class="btn btn-purple-light">ADD</button>
+                        </form>
+                    </div>
+                    <form id="successAdd"></form>
+                </div>
+                <div class="col-sm-4">
+                    <span class="glyphicon glyphicon-facetime-video logo"></span>
+                </div>
+            </div>
+        </div>
+
+        <div id="update" class="container-fluid">
+            <div class="container-fluid bg-grey">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <span class="glyphicon glyphicon-star logo"></span>
+                    </div>
+                    <div class="col-sm-8">
+                        <h2>Update Movie</h2>
+                        <h4>Don't keep our movies in the past</h4>
+                        <p>The wonderful and dramatic world of the movies is where we come together as a family, friends and enthusiasts. Help us keep our library updated and make new movie memories.</p>
+                            <div class="dropdown">
+                                <button class="btn btn-purple-light dropdown-toggle" type="button" data-toggle="dropdown">Pick Movie
+                                <span class="caret"></span></button>
+                                <ul class="dropdown-menu reserve-button" id="currentMovies">
+                                    <!-- Where dropdown options will display -->
+                                </ul>
+                            </div>
+                            <br>
+                            <form id="updateMovie"><!-- Where input boxes are display to update selected movie --></form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="delete" class="container-fluid">
+            <div class="row">
+                <div class="col-sm-8">
+                    <div>
+                        <h2>Delete Movie</h2>
+                        <h4>Take down the movies that never should have seen the light of day</h4>
+                        <p>InterFlix stays up to date thanks to our bright and active community. However, sometimes there are a few movies that never should have been made and end up in our library. This humble community has the power to take down movies to make this the best library of them all.</p>
+                        <div class="dropdown">
+                        <button class="btn btn-purple-light dropdown-toggle" type="button" data-toggle="dropdown">Pick Movie
+                            <span class="caret"></span></button>
+                            <ul class="dropdown-menu reserve-button" id="currentMoviesDelete">
+                                <!-- Where dropdown options will display -->
+                            </ul>
+                            <br>
+                            <form id="deleteMovie"><!-- where selected movie is display to confirm delete --></form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <span class="glyphicon glyphicon-cloud logo"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid text-center bg-grey" id="fullLibrary">
+            <h2>InterFlix Library</h2>
+            <br>
+            <table class="table table-striped table-hover text-justify">
+                <thead class="thead-purple">
+                    <tr>
+                        <th scope="col">Title</th>
+                        <th scope="col">Director</th>
+                        <th scope="col">Genre</th>
+                    </tr>
+                </thead>
+                <tbody id="libraryTable">
+                    <!-- where all current movies display -->
+                </tbody>
+            </table>
+        </div>
+
+        <footer class="container-fluid text-center">
+            <a href="#myPage" title="To Top">
+                <span class="glyphicon glyphicon-chevron-up"></span>
+            </a>
+            <p>Video Games Data <br> <br>
+                <span class="glyphicon glyphicon-certificate"></span>
+            </p>
+        </footer>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    </body>
+
+</html>
