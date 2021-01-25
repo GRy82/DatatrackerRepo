@@ -38,7 +38,9 @@
             </thead>
             <tbody id="searched_games">
             {% for game in unique_titles %}
-                <tr class="accordion-toggle collapsed" id="accordion1" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne">
+
+                {% set accordion = "accordion" %}
+                <tr class="accordion-toggle collapsed" id="{{accordion + game['_id']}}" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne">
                     <td class="expand-button"></td>
                     <td>{{game['name']}}</td>
                     <td>{{game['genre']}}</td>
@@ -97,9 +99,6 @@
         {% endif %}
     </div>
 
-            </form>
-            <div class="col-sm-12" id="searchResults"><!-- where searched movie results display --></div>
-        </div>
 
     <div class="container-fluid">
         <div class="container-fluid text-center bg-grey">
