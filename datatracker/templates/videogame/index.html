@@ -79,12 +79,12 @@
                                     });
                                 </script>
                             </div>
-                            {% for release in game %}
+                            {% for release in game['platforms'] %}
                                 <div class="col-6">
                                     <div class="row">
                                         <div class="col-1"><stronge>-</stronge></div>
-                                        <div class="col-6">Platform: {{game['platform']}}</div>
-                                        <div class="col-5">Year: {{game['year']}}</div>
+                                        <div class="col-6">Platform: {{release['platform']}}</div>
+                                        <div class="col-5">Year: {{release['year']}}</div>
                                     </div>
                                 </div>
                             {% endfor %}
