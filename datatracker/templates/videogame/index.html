@@ -25,7 +25,11 @@
     </div>
 
     <div>
-        <input type="text" />
+        <form method="POST">
+            <p style="display:inline;">Search</p>
+            <input type="text" style="display:inline;" name="search_input" value="{{ request.form['search_input'] }}" placeholder="videogame"/>
+            <button type="submit" >search</button>
+        </form>
     </div>
 
 
