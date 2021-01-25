@@ -13,7 +13,7 @@
 <body>
 
     <div class="container">
-        <h1 id="tester" style="font-size:7vw; text-align: center;">Consumer and Publisher Habits in Gaming Industry</h1>
+        <h1 id="tester" style="font-size:4vw; text-align: center;">Consumer and Publisher Habits in Gaming Industry</h1>
     </div>
 
     <div class="container-fluid text-center">
@@ -21,26 +21,27 @@
         <br>
         <hr>
         <form method='POST'>
-<!--            <p style="display:inline;">Search</p>-->
             <input type="text" style="display:inline;" name="search_input" value="{{ request.form['search_input'] }}" placeholder="videogame"/>
             <input type="submit" value="Submit" class="btn">
         </form>
 
         {% if search_results %}
         <table class="table table-striped table-hover text-justify">
-            <thead >
+            <thead>
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Name</th>
                     <th scope="col">Genre</th>
-                    <th scope="col">publisher</th>
+                    <th scope="col">Publisher</th>
                 </tr>
             </thead>
             <tbody id="searched_games">
             {% for game in unique_titles %}
+            {% set accordion_id = "accordion" + game['platforms'][0]['_id'] %}
+            {% set collapsed_id = "collapsed" + game['platforms'][0]['_id'] %}
+            {% set chart_id = "chart" + game['platforms'][0]['_id'] %}
 
-                {% set accordion = "accordion" %}
-                <tr class="accordion-toggle collapsed" id="{{accordion + game['_id']}}" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne">
+                <tr class="accordion-toggle collapsed" id="{{accordion_id}}" data-toggle="collapse" data-parent="#{{accordion_id}}" href="#{{collapsed_id}}">
                     <td class="expand-button"></td>
                     <td>{{game['name']}}</td>
                     <td>{{game['genre']}}</td>
@@ -49,23 +50,25 @@
                 <tr class="hide-table-padding">
                     <td></td>
                     <td colspan="3">
-                        <div id="collapseOne" class="collapse in p-3">
+                        <div id="{{collapsed_id}}" class="collapse in p-3">
                             <div class="col-6" style="float:right">
                                 <div class="container" style="padding: 5%;">
-                                    <canvas id="searched_chart_{{game['id']}}" width="400" height="200"></canvas>
+                                    <canvas id="{{chart_id}}" width="400" height="200"></canvas>
                                 </div>
                                 <script>
-                                    var ctx = document.getElementById('searched_chart_{{game['id']}}');
+                                    var ctx = document.getElementById('{{chart_id}}');
                                     var myChart = new Chart(ctx, {
                                         type: 'bar',
                                         data: {
-                                            labels : [{% for item in top_names %}
-                                                 "{{item}}",
+                                            labels : [{% for item in game['platforms'] %}
+                                                 "{{item['platform']}}",
                                                 {% endfor %}],
                                             datasets: [{
                                                 label: 'Games Sold per Consoles',
                                                 backgroundColor: "rgba(75,192,192,0.4)",
-                                                data: {{top_qtys}},
+                                                data: [{% for item in game['platforms'] %}
+                                                        "{{item['globalSales']}}",
+                                                    {% endfor %}],
                                                 borderWidth: 1
                                             }]
                                         },
@@ -167,84 +170,6 @@
         });
     </script>
     </div>
-
-    <!--<div>
-        <form method="POST">
-            <p style="display:inline;">Search</p>
-            <input type="text" style="display:inline;" name="search_input" value="{{ request.form['search_input'] }}" placeholder="videogame"/>
-            <button type="submit" >search</button>
-        </form>
-
-        {% if search_results %}
-        <table class="table table-striped table-hover text-justify">
-            <thead >
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Genre</th>
-                    <th scope="col">publisher</th>
-                </tr>
-            </thead>
-            <tbody id="searched_games">
-            {% for game in search_results %}
-                <tr class="accordion-toggle collapsed" id="accordion1" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne">
-                    <td class="expand-button"></td>
-                    <td>{{game['name']}}</td>
-                    <td>{{game['genre']}}</td>
-                    <td>{{game['publisher']}}</td>
-                </tr>
-                <tr class="hide-table-padding">
-                    <td></td>
-                    <td colspan="3">
-                        <div id="collapseOne" class="collapse in p-3">
-                            <div class="col-6" style="float:right">
-                                <div class="container" style="padding: 5%;">
-                                    <canvas id="searched_chart_{{game['id']}}" width="400" height="200"></canvas>
-                                </div>
-                                <script>
-                                    var ctx = document.getElementById('searched_chart_{{game['id']}}');
-                                    var myChart = new Chart(ctx, {
-                                        type: 'bar',
-                                        data: {
-                                            labels : [{% for item in top_names %}
-                                                 "{{item}}",
-                                                {% endfor %}],
-                                            datasets: [{
-                                                label: 'Games Sold per Consoles',
-                                                backgroundColor: "rgba(75,192,192,0.4)",
-                                                data: {{top_qtys}},
-                                                borderWidth: 1
-                                            }]
-                                        },
-                                        options: {
-                                            scales: {
-                                                yAxes: [{
-                                                    ticks: {
-                                                        beginAtZero: true
-                                                    }
-                                                }]
-                                            }
-                                        }
-                                    });
-                                </script>
-                            </div>
-                            {% for release in game %}
-                                <div class="col-6">
-                                    <div class="row">
-                                        <div class="col-1"><stronge>-</stronge></div>
-                                        <div class="col-6">Platform: {{game['platform']}}</div>
-                                        <div class="col-5">Year: {{game['year']}}</div>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </td>
-                </tr>
-            {%endfor%}
-            </tbody>
-        </table>
-        {% endif %}
-    </div>-->
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
