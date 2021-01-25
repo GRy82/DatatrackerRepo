@@ -45,7 +45,7 @@ def index():
         console_pair = {}
         for game in console_games:
             platform = game["platform"]
-            if platform not in console_pair:#if console not in dictionary yet, start at count of 1
+            if platform not in console_pair: #if console not in dictionary yet, start at count of 1
                 console_pair[platform] = 1
             else:                               #if key exists, tally the game onto the console_games count.
                 console_pair[platform] += 1
