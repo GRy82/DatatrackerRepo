@@ -3,19 +3,24 @@
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <title>Title</title>
 </head>
 <body>
-<h1 id="tester">Page is working</h1>
-<div class="col-sm-6">
-    <canvas id="myChart" width="400" height="200"></canvas>
-</div>
 
-<div>
-    <input type="text" />
-</div>
+    <div class="container">
+        <h1 id="tester" style="font-size:7vw; text-align: center;">Page is working</h1>
+    </div>
+
+    <div class="container" style="padding: 10%;">
+        <canvas id="myChart" width="400" height="200"></canvas>
+    </div>
+
+    <div>
+        <input type="text" />
+    </div>
 
 
     <script>
@@ -30,7 +35,7 @@
                      "{{item}}",
                     {% endfor %}],
                 datasets: [{
-                    label: 'Console Sales Since 2013',
+                    label: 'Games sold per console since 2013',
                     backgroundColor: "rgba(75,192,192,0.4)",
                     data: {{console_sales_num}},
                     borderWidth: 1
