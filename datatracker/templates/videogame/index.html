@@ -30,6 +30,26 @@
             <input type="text" style="display:inline;" name="search_input" value="{{ request.form['search_input'] }}" placeholder="videogame"/>
             <button type="submit" >search</button>
         </form>
+
+        <table class="table table-striped table-hover text-justify">
+            <thead >
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Platform</th>
+                    <th scope="col">Year</th>
+                </tr>
+            </thead>
+            <tbody id="searched_games">
+            {% for game in search_results %}
+                <tr>
+                    <td><strong>{{game['name']}}</strong></td>
+                    <td>{{game['platform']}}</td>
+                    <td>{{game['year']}}</td>
+                </tr>
+            {%endfor%}
+            </tbody>
+
+        </table>
     </div>
 
 
