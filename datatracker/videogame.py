@@ -81,8 +81,8 @@ def index():
                 for possible_matches in search_results:
                     if possible_matches["consolidated"] is False and result["name"] == possible_matches["name"]:
                         possible_matches["consolidated"] = True
-                        platform_dict = {"platform": result["platform"], "year": result["year"],
-                                         "globalSales": result["globalSales"]}
+                        platform_dict = {"platform": possible_matches["platform"], "year": possible_matches["year"],
+                                         "globalSales": possible_matches["globalSales"]}
                         common_title_dict["platforms"].append(platform_dict)
                 unique_titles.append(common_title_dict)
         print("Fuck Brady, Fuck Mahomes")
