@@ -7,12 +7,11 @@ bp = Blueprint('videogame', __name__)
 
 @bp.route('/videogame', methods=('GET', 'POST'))
 def index():
+    response = requests.get('https://api.dccresource.com/api/games')
+    all_games = response.json()
+
     if request.method == 'GET':
-        response = requests.get('https://api.dccresource.com/api/games')
-        all_games = response.json()
-
         # filter all_games for instructor-given question
-
         recent_games = []
 
         for game in all_games:
@@ -65,6 +64,13 @@ def index():
 
         return render_template('videogame/index.html', console_name=console_name, console_sales_num=console_sales_num,
                                top_names=top_names, top_qtys=top_qtys)
+    else:
+        search_user_input = request.form["search_input"]
+        search_results = []
+        for game in all_games:
+            if search_user_input in game["name"]:
+                search_results.append(game)
+
 
 
 @bp.route('/layout_example')
