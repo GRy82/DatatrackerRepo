@@ -22,6 +22,10 @@
     border-color: transparent;
     color: #dadde6 !important;
     }
+.btn{
+    color: #dadde6 !important;
+    background-color: rgba(218, 218, 230, 1);
+}
 
 .btn-purple{
     color: #dadde6 !important;
@@ -56,7 +60,6 @@
 .logo {
     color: #7c38df;
     font-size: 200px;
-
 }
 
 @media screen and (max-width: 768px) {
@@ -68,7 +71,6 @@
 
 .alert-purple{
     background-color: rgba(218, 218, 230, 1);
-
 }
 
 .thumbnail {
@@ -90,7 +92,7 @@
 }
 
 .table{
-    background-color: #7b38df13;
+    background-color: rgba(218, 218, 230, 1);
 }
 
 footer .glyphicon {

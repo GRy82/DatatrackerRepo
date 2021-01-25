@@ -17,15 +17,13 @@
     </div>
 
     <div class="container-fluid text-center">
-            <h2>SEARCH FOR GAME</h2>
-            <br>
-            <form class="form-inline" id="ByTitle">
-                <div>
-                    <hr>
-        <form method="POST">
-            <p style="display:inline;">Search</p>
+        <h2>SEARCH FOR GAME</h2>
+        <br>
+        <hr>
+        <form method='POST'>
+<!--            <p style="display:inline;">Search</p>-->
             <input type="text" style="display:inline;" name="search_input" value="{{ request.form['search_input'] }}" placeholder="videogame"/>
-            <button type="submit" class="btn btn-purple-light">search</button>
+            <input type="submit" value="Submit" class="btn">
         </form>
 
         {% if search_results %}
@@ -39,7 +37,7 @@
                 </tr>
             </thead>
             <tbody id="searched_games">
-            {% for game in search_results %}
+            {% for game in unique_titles %}
                 <tr class="accordion-toggle collapsed" id="accordion1" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne">
                     <td class="expand-button"></td>
                     <td>{{game['name']}}</td>
@@ -52,10 +50,10 @@
                         <div id="collapseOne" class="collapse in p-3">
                             <div class="col-6" style="float:right">
                                 <div class="container" style="padding: 5%;">
-                                    <canvas id="searched_chart_{{game['id']" width="400" height="200"></canvas>
+                                    <canvas id="searched_chart_{{game['id']}}" width="400" height="200"></canvas>
                                 </div>
                                 <script>
-                                    var ctx = document.getElementById('searched_chart_{{game['id']');
+                                    var ctx = document.getElementById('searched_chart_{{game['id']}}');
                                     var myChart = new Chart(ctx, {
                                         type: 'bar',
                                         data: {
@@ -202,10 +200,10 @@
                         <div id="collapseOne" class="collapse in p-3">
                             <div class="col-6" style="float:right">
                                 <div class="container" style="padding: 5%;">
-                                    <canvas id="searched_chart_{{game['id']" width="400" height="200"></canvas>
+                                    <canvas id="searched_chart_{{game['id']}}" width="400" height="200"></canvas>
                                 </div>
                                 <script>
-                                    var ctx = document.getElementById('searched_chart_{{game['id']');
+                                    var ctx = document.getElementById('searched_chart_{{game['id']}}');
                                     var myChart = new Chart(ctx, {
                                         type: 'bar',
                                         data: {

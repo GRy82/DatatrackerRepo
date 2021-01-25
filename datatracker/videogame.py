@@ -61,6 +61,7 @@ def index():
             counter += 1
 
     search_results = []
+    unique_titles = []
     if request.method == 'POST':
         search_user_input = request.form["search_input"]
         for game in all_games:
@@ -68,8 +69,6 @@ def index():
                 game["consolidated"] = False
                 search_results.append(game)
 
-
-        unique_titles = []
         for result in search_results:
             if result["consolidated"] is False:
                 result["consolidated"] = True
@@ -86,11 +85,7 @@ def index():
                                                                            "globalSales":
                                                                            possible_matches["globalSales"]}
                 unique_titles.append(common_title_dict)
-
         print("Fuck Brady, Fuck Mahomes")
-
-
-
 
     return render_template('videogame/index.html', console_name=console_name, console_sales_num=console_sales_num,
                            top_names=top_names, top_qtys=top_qtys, search_results=search_results,
