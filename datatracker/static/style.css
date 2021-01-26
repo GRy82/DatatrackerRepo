@@ -1,65 +1,10 @@
-.navbar {
-    margin-bottom: 0;
-    background-color: #7c38df;
-    z-index: 9999;
-    border: 0;
-    font-size: 12px !important;
-    line-height: 1.42857143 !important;
-    letter-spacing: 4px;
-    border-radius: 0;
-}
-
-.navbar li a, .navbar .navbar-brand {
-    color: #f6f6f6 !important;
-}
-
-.navbar-nav li a:hover, .navbar-nav li.active a {
-    color: #dadde6 !important;
-    background-color:rgba(218, 218, 230, 1) !important;
-}
-
-.navbar-default .navbar-toggle {
-    border-color: transparent;
-    color: #dadde6 !important;
-    }
-.btn{
-    color: #dadde6 !important;
-    background-color: rgba(218, 218, 230, 1);
-}
-
-.btn-purple{
-    color: #dadde6 !important;
-    background-color: rgba(218, 218, 230, 1);
-}
-
-.btn-purple-light{
-    color: #f6f6f6 !important;
-    background-color: rgba(218, 218, 230, 1);
-}
-
-.jumbotron {
-    background-color: rgba(218, 218, 230, 1);
-    color: #f6f6f6;
-    padding: 80px 25px;
-
-}
-
-.jumbotron img{
-    width: 40%;
-    margin-bottom: 10px;
-}
 
 .container-fluid {
     padding: 60px 50px;
 }
 
 .bg-grey {
-    background-color: #e6e6e6;
-}
-
-.logo {
-    color: #7c38df;
-    font-size: 200px;
+    background-color: rgba(4, 5, 6, 1);
 }
 
 @media screen and (max-width: 768px) {
@@ -69,37 +14,9 @@
     }
 }
 
-.alert-purple{
-    background-color: rgba(218, 218, 230, 1);
-}
-
-.thumbnail {
-  padding: 0 0 15px 0;
-  border: none;
-  border-radius: 0;
-}
-
-.thumbnail img {
-  width: 200px;
-  height: 300px;
-  margin-bottom: 10px;
-}
-
-.thead-purple{
-    background-color: rgba(218, 218, 230, 1);
-    color: #f6f6f6
-
-}
-
 .table{
-    background-color: rgba(218, 218, 230, 1);
+    background-color: rgba(4, 5, 6, 1);
 }
-
-footer .glyphicon {
-    font-size: 20px;
-    margin-bottom: 20px;
-    color: #7c38df;
-  }
 
 tr.hide-table-padding td {
   padding: 0px;

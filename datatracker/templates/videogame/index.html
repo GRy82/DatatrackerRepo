@@ -16,6 +16,96 @@
         <h1 id="tester" style="font-size:4vw; text-align: center;">Consumer and Publisher Habits in Gaming Industry</h1>
     </div>
 
+    <!--    Search results and charts-->
+    <div class="container-fluid text-center">
+        <h2>SEARCH FOR GAME</h2>
+        <br>
+        <hr>
+        <form method='POST'>
+            <input type="text" style="display:inline;" name="search_input" value="{{ request.form['search_input'] }}" placeholder="videogame"/>
+            <input type="submit" value="Submit" style="color: black; background-color: gray;">
+        </form>
+
+        <br>
+        <br>
+
+        {% if search_results %}
+        <table class="table table-hover text-justify">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Genre</th>
+                    <th scope="col">Publisher</th>
+                </tr>
+            </thead>
+            <tbody id="searched_games">
+            {% for game in unique_titles %}
+            {% set accordion_id = "accordion" + game['platforms'][0]['_id'] %}
+            {% set collapsed_id = "collapsed" + game['platforms'][0]['_id'] %}
+            {% set chart_id = "chart" + game['platforms'][0]['_id'] %}
+
+                <tr class="accordion-toggle collapsed" id="{{accordion_id}}" data-toggle="collapse" data-parent="#{{accordion_id}}" href="#{{collapsed_id}}">
+                    <td class="expand-button"></td>
+                    <td>{{game['name']}}</td>
+                    <td>{{game['genre']}}</td>
+                    <td>{{game['publisher']}}</td>
+                </tr>
+                <tr class="hide-table-padding">
+                    <td></td>
+                    <td colspan="3">
+                        <div id="{{collapsed_id}}" class="collapse in p-3">
+                            <div class="col-6" style="float:right">
+                                <div class="container" style="padding: 5%;">
+                                    <canvas id="{{chart_id}}" width="400" height="200"></canvas>
+                                </div>
+                                <script>
+                                    var ctx = document.getElementById('{{chart_id}}');
+                                    var myChart = new Chart(ctx, {
+                                        type: 'bar',
+                                        data: {
+                                            labels : [{% for item in game['platforms'] %}
+                                                 "{{item['platform']}}",
+                                                {% endfor %}],
+                                            datasets: [{
+                                                label: 'Games Sold per Consoles',
+                                                backgroundColor: "rgba(75,192,192,0.4)",
+                                                data: [{% for item in game['platforms'] %}
+                                                        "{{item['globalSales']}}",
+                                                    {% endfor %}],
+                                                borderWidth: 1
+                                            }]
+                                        },
+                                        options: {
+                                            scales: {
+                                                yAxes: [{
+                                                    ticks: {
+                                                        beginAtZero: true
+                                                    }
+                                                }]
+                                            }
+                                        }
+                                    });
+                                </script>
+                            </div>
+                            {% for release in game['platforms'] %}
+                                <div class="col-6">
+                                    <div class="row">
+                                        <div class="col-1"><stronge>-</stronge></div>
+                                        <div class="col-6">Platform: {{release['platform']}}</div>
+                                        <div class="col-5">Year: {{release['year']}}</div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </td>
+                </tr>
+            {%endfor%}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+
 <!--    All charts in a carousel-->
     <div class="container-fluid">
         <div class="container-fluid text-center bg-grey">
@@ -137,135 +227,9 @@
         </div>
     </div>
 
-<!--    Search results and charts-->
-    <div class="container-fluid text-center">
-        <h2>SEARCH FOR GAME</h2>
-        <br>
-        <hr>
-        <form method='POST'>
-            <input type="text" style="display:inline;" name="search_input" value="{{ request.form['search_input'] }}" placeholder="videogame"/>
-            <input type="submit" value="Submit" class="btn">
-        </form>
-
-        {% if search_results %}
-        <table class="table table-striped table-hover text-justify">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Genre</th>
-                    <th scope="col">Publisher</th>
-                </tr>
-            </thead>
-            <tbody id="searched_games">
-            {% for game in unique_titles %}
-            {% set accordion_id = "accordion" + game['platforms'][0]['_id'] %}
-            {% set collapsed_id = "collapsed" + game['platforms'][0]['_id'] %}
-            {% set chart_id = "chart" + game['platforms'][0]['_id'] %}
-
-                <tr class="accordion-toggle collapsed" id="{{accordion_id}}" data-toggle="collapse" data-parent="#{{accordion_id}}" href="#{{collapsed_id}}">
-                    <td class="expand-button"></td>
-                    <td>{{game['name']}}</td>
-                    <td>{{game['genre']}}</td>
-                    <td>{{game['publisher']}}</td>
-                </tr>
-                <tr class="hide-table-padding">
-                    <td></td>
-                    <td colspan="3">
-                        <div id="{{collapsed_id}}" class="collapse in p-3">
-                            <div class="col-6" style="float:right">
-                                <div class="container" style="padding: 5%;">
-                                    <canvas id="{{chart_id}}" width="400" height="200"></canvas>
-                                </div>
-                                <script>
-                                    var ctx = document.getElementById('{{chart_id}}');
-                                    var myChart = new Chart(ctx, {
-                                        type: 'bar',
-                                        data: {
-                                            labels : [{% for item in game['platforms'] %}
-                                                 "{{item['platform']}}",
-                                                {% endfor %}],
-                                            datasets: [{
-                                                label: 'Games Sold per Consoles',
-                                                backgroundColor: "rgba(75,192,192,0.4)",
-                                                data: [{% for item in game['platforms'] %}
-                                                        "{{item['globalSales']}}",
-                                                    {% endfor %}],
-                                                borderWidth: 1
-                                            }]
-                                        },
-                                        options: {
-                                            scales: {
-                                                yAxes: [{
-                                                    ticks: {
-                                                        beginAtZero: true
-                                                    }
-                                                }]
-                                            }
-                                        }
-                                    });
-                                </script>
-                            </div>
-                            {% for release in game['platforms'] %}
-                                <div class="col-6">
-                                    <div class="row">
-                                        <div class="col-1"><stronge>-</stronge></div>
-                                        <div class="col-6">Platform: {{release['platform']}}</div>
-                                        <div class="col-5">Year: {{release['year']}}</div>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </td>
-                </tr>
-            {%endfor%}
-            </tbody>
-        </table>
-        {% endif %}
-    </div>
-
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 </body>
 </html>
-
-<!--
-                <script>
-                    var ctx = document.getElementById('successfulPublisherChart1');
-                    var myChart = new Chart(ctx, {
-                        type: 'horizontalBar',
-                        data: {
-                            labels : [{% for item in console_name %}
-                                 "{{item}}",
-                                {% endfor %}],
-                            datasets: [{
-                                label: 'nes',
-                                data: [12, 19, 3, 5, 2, 3, 12, 4.8, 0, 9, 10],
-                                backgroundColor: '#9efffc',
-                            },
-                            {
-                                label: 'ps3',
-                                data: [20.7, 0, 13, 20, 3, 5, 8, 12, 7, 10, 9],
-                                backgroundColor: '#9ed5ff',
-                            },
-                            {
-                                label: 'nentendo',
-                                data: [11.4, 2, 6, 8, 0, 4, 8, 5, 9, 12, 2],
-                                backgroundColor: '#9ea4ff',
-                            }]
-                        },
-                        options: {
-                            scales: {
-                                xAxes: [{ stacked: true }],
-                                yAxes: [{
-                                    ticks: {
-                                        beginAtZero: true
-                                    },
-                                    stacked: true,
-                                }]
-                            }
-                        }
-                    });
-                </script>-->
