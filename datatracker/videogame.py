@@ -14,7 +14,7 @@ def index():
     console_sales = {}
     console_name = []
     console_sales_num = []
-    console_pair = {} # For custom question
+    console_pair = {}  # For custom question
 
     # filter all_games for instructor-given question
 
@@ -132,6 +132,27 @@ def index():
                 # Add uniquely titled game, or set of games, to the list of unique titles.
                 unique_titles.append(common_title_dict)
         print("Fuck Brady, Fuck Mahomes")
+
+    ########################## ########################## ########################## ##########################
+    # Bonus alternate
+
+    # bonus_data = []
+    # all_consoles = []
+    # all_consoles_string = []
+    # for game in all_games:
+    #     if game["platform"] not in all_consoles_string:
+    #         all_consoles.append(game["platform"])
+    #
+    # for console in all_consoles_string:
+    #     console_dict = {"platform": console, }
+    #     all_consoles.append()
+    #
+    # for game in all_games:
+    #     if game["publisher"] not in bonus_data.key():
+    #         bonus_data.append(game["publisher"])
+    #
+    # print("tree")
+
 
     return render_template('videogame/index.html', console_name=console_name, console_sales_num=console_sales_num,
                            top_names=top_names, top_qtys=top_qtys, search_results=search_results,
