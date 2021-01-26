@@ -16,6 +16,7 @@
         <h1 id="tester" style="font-size:4vw; text-align: center;">Consumer and Publisher Habits in Gaming Industry</h1>
     </div>
 
+<!--    Search results and charts-->
     <div class="container-fluid text-center">
         <h2>SEARCH FOR GAME</h2>
         <br>
@@ -102,10 +103,10 @@
         {% endif %}
     </div>
 
-
+<!--    Published Games per Console Chart-->
     <div class="container-fluid">
         <div class="container-fluid text-center bg-grey">
-            <h2>INTERFLIX FAVORITES</h2>
+            <h2>Games Sold per Consoles</h2>
             <br>
             <div class="container" style="padding: 10%;">
                 <canvas id="publishedGamesPerConsole" width="400" height="200"></canvas>
@@ -140,7 +141,10 @@
         </div>
     </div>
 
+<!--    Games Sold per Console since 2013-->
     <div class="container" style="padding: 10%;">
+        <h2>Games Sold per Console Since 2013</h2>
+        <br>
         <canvas id="globalGameSalesByConsole" width="400" height="200"></canvas>
         <script>
         var ctx = document.getElementById('globalGameSalesByConsole');
@@ -169,6 +173,54 @@
             }
         });
     </script>
+    </div>
+
+<!--    Successful Publishers per Console-->
+    <div class="container-fluid">
+        <div class="container-fluid text-center bg-grey">
+            <h2>Successful Publisher per Console</h2>
+            <br>
+            <div class="container" style="padding: 10%;">
+                <canvas id="successfulPublisherChart" width="400" height="200"></canvas>
+                <script>
+                    var ctx = document.getElementById('successfulPublisherChart');
+                    var myChart = new Chart(ctx, {
+                        type: 'horizontalBar',
+                        data: {
+                            labels : [{% for item in console_name %}
+                                 "{{item}}",
+                                {% endfor %}],
+                            datasets: [{
+                                label: 'nes',
+                                data: [12, 19, 3, 5, 2, 3, 12, 4.8, 0, 9, 10],
+                                backgroundColor: '#9efffc',
+                            },
+                            {
+                                label: 'ps3',
+                                data: [20.7, 0, 13, 20, 3, 5, 8, 12, 7, 10, 9],
+                                backgroundColor: '#9ed5ff',
+                            },
+                            {
+                                label: 'nentendo',
+                                data: [11.4, 2, 6, 8, 0, 4, 8, 5, 9, 12, 2],
+                                backgroundColor: '#9ea4ff',
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                xAxes: [{ stacked: true }],
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    },
+                                    stacked: true,
+                                }]
+                            }
+                        }
+                    });
+                </script>
+            </div>
+        </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
