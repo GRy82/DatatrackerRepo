@@ -10,46 +10,37 @@ def index():
     response = requests.get('https://api.dccresource.com/api/games')
     all_games = response.json()
 
-    # filter all_games for instructor-given question
-    recent_games = []
-
-    for game in all_games:
-        if game["year"] is not None:
-            if game["year"] >= 2013:
-                recent_games.append(game)
-
+    # create data structures for future use.
     console_sales = {}
-    for recent_game in recent_games:
-        platform = recent_game["platform"]
-        if recent_game["platform"] not in console_sales.keys():
-            console_sales[platform] = recent_game["globalSales"]
-        else:
-            console_sales[platform] += recent_game["globalSales"]
-
     console_name = []
     console_sales_num = []
+    console_pair = {}  # For custom question
 
-    for key in console_sales:
-        console_name.append(key)
-        console_sales_num.append(console_sales[key])
+    # filter all_games for instructor-given question
 
-   #################### #################### #################### #################### ####################
-    # filter all_games for custom question
-    # Which console has the highest quantity of games made for it? Top 10
-    console_games = []
     for game in all_games:
-        console_games.append(game)
-
-    console_pair = {}
-    for game in console_games:
-        platform = game["platform"]
-        if platform not in console_pair:  # if console not in dictionary yet, start at count of 1
+        # Checking for custom question
+        if platform not in console_pair.keys():  # if console not in dictionary yet, start at count of 1
             console_pair[platform] = 1
         else:                               # if key exists, tally the game onto the console_games count.
             console_pair[platform] += 1
+        # Checking for user story question
+        if game["year"] is not None and game["year"] >= 2013:
+            platform = game["platform"]
+            if game["platform"] not in console_sales.keys():
+                console_sales[platform] = game["globalSales"]
+                console_name.append(platform)
+            else:
+                console_sales[platform] += game["globalSales"]
+
+    for key in console_sales:
+        console_sales_num.append(console_sales[key])
+
+   # ################### #################### #################### #################### ####################
+    # custom question
+    # Which console has the highest quantity of games made for it? Top 10
 
     sorted_pairs = dict(sorted(console_pair.items(), key=operator.itemgetter(1), reverse=True))
-
     top_names = []
     top_qtys = []
     counter = 0
@@ -59,9 +50,8 @@ def index():
             top_names.append(name)
             top_qtys.append(sorted_pairs[name])
             counter += 1
-
-    search_results = []
-    unique_titles = []
+        else:
+            break
 
     #  Bonus  #################################################################################################
 
@@ -108,10 +98,11 @@ def index():
                         console["topPublisher"] = publisher["publisher"]
                         console["topSales"] = publisher[console["console"]]
 
-
-
     # If user is searching for a game (POST) #################################################################
+
     if request.method == 'POST':
+        search_results = []
+        unique_titles = []
         search_user_input = request.form["search_input"]
         # Find all matches to search word(s)
         for game in all_games:
