@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, redirect
+from flask import Flask
 
 
 def create_app():
@@ -18,7 +18,6 @@ def create_app():
     from . import videogame
     app.register_blueprint(videogame.bp)
 
-
-
+    app.add_url_rule('/', endpoint='videogame.index')
 
     return app
