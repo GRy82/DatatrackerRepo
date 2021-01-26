@@ -15,15 +15,8 @@ def create_app():
     except OSError:
         pass
 
-    from . import sample
-    app.register_blueprint(sample.bp)
-    # app.add_url_rule('/', endpoint='index')
-
     from . import videogame
     app.register_blueprint(videogame.bp)
-
-    @app.route('/hello')
-    def hello():
-        return 'Hello, World!'
+    app.add_url_rule('/', endpoint='videogame.index')
 
     return app
