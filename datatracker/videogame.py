@@ -20,13 +20,13 @@ def index():
 
     for game in all_games:
         # Checking for custom question
+        platform = game["platform"]
         if platform not in console_pair.keys():  # if console not in dictionary yet, start at count of 1
             console_pair[platform] = 1
         else:                               # if key exists, tally the game onto the console_games count.
             console_pair[platform] += 1
         # Checking for user story question
         if game["year"] is not None and game["year"] >= 2013:
-            platform = game["platform"]
             if game["platform"] not in console_sales.keys():
                 console_sales[platform] = game["globalSales"]
                 console_name.append(platform)
@@ -133,32 +133,40 @@ def index():
                 unique_titles.append(common_title_dict)
         print("Fuck Brady, Fuck Mahomes")
 
-    ########################## ########################## ########################## ##########################
-    # Bonus alternate
+# ########################## ########################## ########################## ##########################
+#     # Bonus alternate (maybe trash)
+#
+#     bonus_data = []
+#     all_consoles = []
+#     placeholderfordict ={}
+#     for game in all_games:
+#         if not all_consoles:
+#             placeholderfordict[game["platform"]] = 0
+#             all_consoles.append(placeholderfordict)
+#         elif game["platform"] not in all_consoles:
+#             placeholderfordict[game["platform"]] = 0
+#             all_consoles.append(placeholderfordict)
+#
+#     console_dict_bonus = {}
+#     console_dict_bonus["consoles_sales"] = placeholderfordict
+#
+#     for game in all_games:
+#         if not bonus_data:
+#             console_dict_bonus["publisher"] = game["publisher"]
+#             bonus_data.append(console_dict)
+#         elif game["publisher"] not in bonus_data:
+#             console_dict_bonus["publisher"] = game["publisher"]
+#             bonus_data.append(console_dict)
+#             for item in bonus_data["consoles_sales"]:   # work in progress. maybe trash
+#                 if game["platform"] == item["platform"]:
+#                     item["platform"] = game["platform"]
+#     print("tree")
+# ########################## ########################## ########################## ##########################
 
-    # bonus_data = []
-    # all_consoles = []
-    # all_consoles_string = []
-    # for game in all_games:
-    #     if game["platform"] not in all_consoles_string:
-    #         all_consoles.append(game["platform"])
-    #
-    # for console in all_consoles_string:
-    #     console_dict = {"platform": console, }
-    #     all_consoles.append()
-    #
-    # for game in all_games:
-    #     if game["publisher"] not in bonus_data.key():
-    #         bonus_data.append(game["publisher"])
-    #
-    # print("tree")
 
     return render_template('videogame/index.html', console_name=console_name, console_sales_num=console_sales_num,
                            top_names=top_names, top_qtys=top_qtys, search_results=search_results,
                            unique_titles=unique_titles, unique_console_dicts=unique_console_dicts)
-
-
-
 
 
 @bp.route('/layout_example')
