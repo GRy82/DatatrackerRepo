@@ -163,6 +163,7 @@ def index():
 #     print("tree")
 # ########################## ########################## ########################## ##########################
 
+
     return render_template('videogame/index.html', console_name=console_name, console_sales_num=console_sales_num,
                            top_names=top_names, top_qtys=top_qtys, search_results=search_results,
                            unique_titles=unique_titles, unique_console_dicts=unique_console_dicts)
