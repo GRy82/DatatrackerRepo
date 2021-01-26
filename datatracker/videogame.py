@@ -100,9 +100,9 @@ def index():
 
     # If user is searching for a game (POST) #################################################################
 
+    search_results = []
+    unique_titles = []
     if request.method == 'POST':
-        search_results = []
-        unique_titles = []
         search_user_input = request.form["search_input"]
         # Find all matches to search word(s)
         for game in all_games:
@@ -152,7 +152,6 @@ def index():
     #         bonus_data.append(game["publisher"])
     #
     # print("tree")
-
 
     return render_template('videogame/index.html', console_name=console_name, console_sales_num=console_sales_num,
                            top_names=top_names, top_qtys=top_qtys, search_results=search_results,
