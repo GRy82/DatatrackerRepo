@@ -20,13 +20,13 @@ def index():
 
     for game in all_games:
         # Checking for custom question
+        platform = game["platform"]
         if platform not in console_pair.keys():  # if console not in dictionary yet, start at count of 1
             console_pair[platform] = 1
         else:                               # if key exists, tally the game onto the console_games count.
             console_pair[platform] += 1
         # Checking for user story question
         if game["year"] is not None and game["year"] >= 2013:
-            platform = game["platform"]
             if game["platform"] not in console_sales.keys():
                 console_sales[platform] = game["globalSales"]
                 console_name.append(platform)
@@ -100,9 +100,9 @@ def index():
 
     # If user is searching for a game (POST) #################################################################
 
+    search_results = []
+    unique_titles = []
     if request.method == 'POST':
-        search_results = []
-        unique_titles = []
         search_user_input = request.form["search_input"]
         # Find all matches to search word(s)
         for game in all_games:

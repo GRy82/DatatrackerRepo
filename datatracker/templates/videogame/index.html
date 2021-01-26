@@ -16,6 +16,127 @@
         <h1 id="tester" style="font-size:4vw; text-align: center;">Consumer and Publisher Habits in Gaming Industry</h1>
     </div>
 
+<!--    All charts in a carousel-->
+    <div class="container-fluid">
+        <div class="container-fluid text-center bg-grey">
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <canvas id="globalGameSalesByConsole" width="400" height="200"></canvas>
+                        <script>
+                    var ctx = document.getElementById('globalGameSalesByConsole');
+                    var myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+
+                            labels : [{% for item in console_name %}
+                                 "{{item}}",
+                                {% endfor %}],
+                            datasets: [{
+                                label: 'Games Sold per Console Since 2013',
+                                backgroundColor: "rgba(75,192,192,0.4)",
+                                data: {{console_sales_num}},
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+
+
+                        </script>
+                    </div>
+                    <div class="carousel-item">
+                        <canvas id="publishedGamesPerConsole" width="400" height="200"></canvas>
+                        <script>
+                        var ctx = document.getElementById('publishedGamesPerConsole');
+                        var myChart = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+
+                                labels : [{% for item in top_names %}
+                                     "{{item}}",
+                                    {% endfor %}],
+                                datasets: [{
+                                    label: 'Games Published per Console',
+                                    backgroundColor: "rgba(75,192,192,0.4)",
+                                    data: {{top_qtys}},
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+
+
+                        </script>
+                    </div>
+                    <div class="carousel-item">
+                        <canvas id="successfulPublisherChart" width="400" height="200"></canvas>
+                        <script>
+                            var ctx = document.getElementById('successfulPublisherChart');
+                            var myChart = new Chart(ctx, {
+                                type: 'horizontalBar',
+                                data: {
+                                    labels : [{% for item in unique_console_dicts %}
+                                         "{{item['console']}}",
+                                        {% endfor %}],
+                                    datasets: [{
+                                        label: [{% for item in unique_console_dicts %}
+                                         "{{item['topPublisher']}}",
+                                        {% endfor %}],
+                                        data: [{% for item in unique_console_dicts %}
+                                                                "{{item['topSales']}}",
+                                                            {% endfor %}],
+                                        backgroundColor: '#9efffc',
+                                    }]
+                                },
+                                options: {
+                                    scales: {
+                                        xAxes: [{ stacked: true }],
+                                        yAxes: [{
+                                            ticks: {
+                                                beginAtZero: true
+                                            },
+                                            stacked: true,
+                                        }]
+                                    }
+                                }
+                            });
+                        </script>
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
 <!--    Search results and charts-->
     <div class="container-fluid text-center">
         <h2>SEARCH FOR GAME</h2>
@@ -101,120 +222,6 @@
             </tbody>
         </table>
         {% endif %}
-    </div>
-
-<!--    Published Games per Console Chart-->
-    <div class="container-fluid">
-        <div class="container-fluid text-center bg-grey">
-            <h2>Games Sold per Consoles</h2>
-            <br>
-            <div class="container" style="padding: 10%;">
-                <canvas id="publishedGamesPerConsole" width="400" height="200"></canvas>
-                <script>
-                    var ctx = document.getElementById('publishedGamesPerConsole');
-                    var myChart = new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-
-                            labels : [{% for item in top_names %}
-                                 "{{item}}",
-                                {% endfor %}],
-                            datasets: [{
-                                label: 'Games Published per Console',
-                                backgroundColor: "rgba(75,192,192,0.4)",
-                                data: {{top_qtys}},
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            scales: {
-                                yAxes: [{
-                                    ticks: {
-                                        beginAtZero: true
-                                    }
-                                }]
-                            }
-                        }
-                    });
-                </script>
-            </div>
-        </div>
-    </div>
-
-<!--    Games Sold per Console since 2013-->
-    <div class="container" style="padding: 10%;">
-        <h2>Games Sold per Console Since 2013</h2>
-        <br>
-        <canvas id="globalGameSalesByConsole" width="400" height="200"></canvas>
-        <script>
-        var ctx = document.getElementById('globalGameSalesByConsole');
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-
-                labels : [{% for item in console_name %}
-                     "{{item}}",
-                    {% endfor %}],
-                datasets: [{
-                    label: 'Games Sold per Console Since 2013',
-                    backgroundColor: "rgba(75,192,192,0.4)",
-                    data: {{console_sales_num}},
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-        });
-    </script>
-    </div>
-
-<!--    Successful Publishers per Console-->
-    <div class="container-fluid">
-        <div class="container-fluid text-center bg-grey">
-            <h2>Successful Publisher per Console</h2>
-            <br>
-            <div class="container" style="padding: 10%;">
-                <canvas id="successfulPublisherChart" width="400" height="200"></canvas>
-                <script>
-                    var ctx = document.getElementById('successfulPublisherChart');
-                    var myChart = new Chart(ctx, {
-                        type: 'horizontalBar',
-                        data: {
-                            labels : [{% for item in unique_console_dicts %}
-                                 "{{item['console']}}",
-                                {% endfor %}],
-                            datasets: [{
-                                label: [{% for item in unique_console_dicts %}
-                                 "{{item['topPublisher']}}",
-                                {% endfor %}],
-                                data: [{% for item in unique_console_dicts %}
-                                                        "{{item['topSales']}}",
-                                                    {% endfor %}],
-                                backgroundColor: '#9efffc',
-                            }]
-                        },
-                        options: {
-                            scales: {
-                                xAxes: [{ stacked: true }],
-                                yAxes: [{
-                                    ticks: {
-                                        beginAtZero: true
-                                    },
-                                    stacked: true,
-                                }]
-                            }
-                        }
-                    });
-                </script>
-            </div>
-        </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
