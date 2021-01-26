@@ -142,33 +142,39 @@ def index():
                 unique_titles.append(common_title_dict)
         print("Fuck Brady, Fuck Mahomes")
 
-########################## ########################## ########################## ##########################
-    # Bonus alternate
-
-    # bonus_data = []
-    # all_consoles = []
-    # all_consoles_string = []
-    # for game in all_games:
-    #     if game["platform"] not in all_consoles_string:
-    #         all_consoles.append(game["platform"])
-    #
-    # for console in all_consoles_string:
-    #     console_dict = {"platform": console, }
-    #     all_consoles.append()
-    #
-    # for game in all_games:
-    #     if game["publisher"] not in bonus_data.key():
-    #         bonus_data.append(game["publisher"])
-    #
-    # print("tree")
-
+# ########################## ########################## ########################## ##########################
+#     # Bonus alternate (maybe trash)
+#
+#     bonus_data = []
+#     all_consoles = []
+#     placeholderfordict ={}
+#     for game in all_games:
+#         if not all_consoles:
+#             placeholderfordict[game["platform"]] = 0
+#             all_consoles.append(placeholderfordict)
+#         elif game["platform"] not in all_consoles:
+#             placeholderfordict[game["platform"]] = 0
+#             all_consoles.append(placeholderfordict)
+#
+#     console_dict_bonus = {}
+#     console_dict_bonus["consoles_sales"] = placeholderfordict
+#
+#     for game in all_games:
+#         if not bonus_data:
+#             console_dict_bonus["publisher"] = game["publisher"]
+#             bonus_data.append(console_dict)
+#         elif game["publisher"] not in bonus_data:
+#             console_dict_bonus["publisher"] = game["publisher"]
+#             bonus_data.append(console_dict)
+#             for item in bonus_data["consoles_sales"]:   # work in progress. maybe trash
+#                 if game["platform"] == item["platform"]:
+#                     item["platform"] = game["platform"]
+#     print("tree")
+# ########################## ########################## ########################## ##########################
 
     return render_template('videogame/index.html', console_name=console_name, console_sales_num=console_sales_num,
                            top_names=top_names, top_qtys=top_qtys, search_results=search_results,
                            unique_titles=unique_titles, unique_console_dicts=unique_console_dicts)
-
-
-
 
 
 @bp.route('/layout_example')
