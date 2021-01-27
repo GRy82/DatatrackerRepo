@@ -25,15 +25,15 @@
         <h3>SEARCH FOR GAME</h3>
         <hr>
         <form method='POST'>
-            <input type="text" style="display:inline;" name="search_input" value="{{ request.form['search_input'] }}" placeholder="videogame"/>
-            <input type="submit" value="Submit" class="bg-secondary">
+            <input type="text" style="display:inline;" name="user_input" value="{{ request.form['user_input'] }}" placeholder="videogame"/>
+            <input type="submit" value="Submit" style="color: black; background-color: gray;">
         </form>
 
         <br>
         <br>
 
         {% if search_results %}
-        <table class="table table-hover text-justify">
+        <table class="table table-hover text-justify" style="color:white; background-color: gray;">
             <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -109,148 +109,127 @@
         {% endif %}
     </div>
 
-<canvas id="doughnut-chart" width="800" height="450"></canvas>
-    <script>
-    new Chart(document.getElementById("doughnut-chart"), {
-    type: 'doughnut',
-    data: {
-      labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
-      datasets: [
-        {
-          label: "Population (millions)",
-          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-          data: [2478,5267,734,784,433]
-        }
-      ]
-    },
-    options: {
-      title: {
-        display: true,
-        text: 'Predicted world population (millions) in 2050'
-      }
-    }
-});
-</script>
-<!--    All charts in a carousel-->
-    <div class="container-fluid">
-        <div class="container-fluid text-center bg-grey">
-            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                <ol class="carousel-indicators">
-                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                </ol>
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
+    <div class="accordion" id="myAccordion">
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <h2 class="mb-0">
+                    <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapseOne">Sales Per Console Since 2013</button>
+                </h2>
+            </div>
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#myAccordion">
+                <div class="card-body margins">
+                    <div class="container">
                         <canvas id="globalGameSalesByConsole" width="400" height="200"></canvas>
-                        <script>
-                    var ctx = document.getElementById('globalGameSalesByConsole');
-                    var myChart = new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-
-                            labels : [{% for item in console_name %}
-                                 "{{item}}",
-                                {% endfor %}],
-                            datasets: [{
-                                label: 'Games Sold per Console Since 2013',
-                                backgroundColor: "rgba(75,192,192,0.4)",
-                                data: {{console_sales_num}},
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            scales: {
-                                yAxes: [{
-                                    ticks: {
-                                        beginAtZero: true
-                                    }
-                                }]
-                            }
-                        }
-                    });
-
-
-                        </script>
                     </div>
-                    <div class="carousel-item">
-                        <canvas id="publishedGamesPerConsole" width="400" height="200"></canvas>
-                        <script>
-                        var ctx = document.getElementById('publishedGamesPerConsole');
-                        var myChart = new Chart(ctx, {
-                            type: 'bar',
-                            data: {
-
-                                labels : [{% for item in top_names %}
-                                     "{{item}}",
-                                    {% endfor %}],
-                                datasets: [{
-                                    label: 'Games Published per Console',
-                                    backgroundColor: "rgba(75,192,192,0.4)",
-                                    data: {{top_qtys}},
-                                    borderWidth: 1
-                                }]
-                            },
-                            options: {
-                                scales: {
-                                    yAxes: [{
-                                        ticks: {
-                                            beginAtZero: true
-                                        }
-                                    }]
-                                }
-                            }
-                        });
-
-
-                        </script>
-                    </div>
-                    <div class="carousel-item">
-                        <canvas id="successfulPublisherChart" width="400" height="200"></canvas>
-                        <script>
-                            var ctx = document.getElementById('successfulPublisherChart');
+                  <script>
+                     var ctx = document.getElementById('globalGameSalesByConsole');
                             var myChart = new Chart(ctx, {
-                                type: 'horizontalBar',
+                                type: 'bar',
                                 data: {
-                                    labels : [{% for item in unique_console_dicts %}
-                                         "{{item['console']}}",
+
+                                    labels : [{% for item in console_name %}
+                                         "{{item}}",
                                         {% endfor %}],
                                     datasets: [{
-                                        label: [{% for item in unique_console_dicts %}
-                                         "{{item['topPublisher']}}",
-                                        {% endfor %}],
-                                        data: [{% for item in unique_console_dicts %}
-                                                                "{{item['topSales']}}",
-                                                            {% endfor %}],
-                                        backgroundColor: '#9efffc',
+                                        label: 'Games Sold per Console Since 2013',
+                                        backgroundColor: "rgba(75,192,192,0.4)",
+                                        data: {{console_sales_num}},
+                                        borderWidth: 1
                                     }]
                                 },
                                 options: {
                                     scales: {
-                                        xAxes: [{ stacked: true }],
                                         yAxes: [{
                                             ticks: {
                                                 beginAtZero: true
-                                            },
-                                            stacked: true,
+                                            }
                                         }]
                                     }
                                 }
                             });
                         </script>
-                    </div>
                 </div>
-                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingTwo">
+                <h2 class="mb-0">
+                    <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo">Number of Published Games Per Console</button>
+                </h2>
+            </div>
+            <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#myAccordion">
+                <div class="card-body margins">
+                    <div class="container">
+                        <canvas id="publishedGamesPerConsole" width="400" height="200"></canvas>
+                    </div>
+                        <script>
+                            var ctx = document.getElementById('publishedGamesPerConsole');
+                            var myChart = new Chart(ctx, {
+                                type: 'bar',
+                                data: {
+
+                                    labels : [{% for item in top_names %}
+                                         "{{item}}",
+                                        {% endfor %}],
+                                    datasets: [{
+                                        label: 'Games Published per Console',
+                                        backgroundColor: "rgba(75,192,192,0.4)",
+                                        data: {{top_qtys}},
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    scales: {
+                                        yAxes: [{
+                                            ticks: {
+                                                beginAtZero: true
+                                            }
+                                        }]
+                                    }
+                                }
+                            });
+                        </script>
+                </div>
             </div>
         </div>
     </div>
+        <br>
+        <div class="container">
+             <form method="POST">
+                <select id="console-selector" name="user_input" value="{{ request.form['user_input'] }}">
+                    {% for console in console_names %}
+                    <option value="{{console}}">{{console}}</option>
+                    {% endfor %}
+                </select>
+                 <input type="submit" value="Change Console">
+             </form>
+            <canvas id="doughnut-chart2" width="400" height="200"></canvas>
+        </div>
+    <script>
+            new Chart(document.getElementById("doughnut-chart2"), {
+                type: 'doughnut',
+                data: {
+                  labels: [{% for publisher in single_console_dict %}
+                             "{{publisher}}",
+                            {% endfor %}],
+                  datasets: [
+                    {
+                      label: "Population (millions)",
+                      backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                      data: [{% for x, y in single_console_dict.items() %}
+                                {{y}},
+                               {% endfor %}]
+                    }
+                  ]
+                },
+                options: {
+                  title: {
+                    display: true,
+                    text: 'Predicted world population (millions) in 2050'
+                  }
+                }
+            });
+    </script>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
