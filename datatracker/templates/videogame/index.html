@@ -10,20 +10,23 @@
     <link rel="stylesheet" href="static/style.css">
 </head>
 
-<body>
-
-    <div class="container">
-        <h1 id="tester" style="font-size:4vw; text-align: center;">Consumer and Publisher Habits in Gaming Industry</h1>
+<body class="bg-light">
+    <div class="jumbotron jumbotron-fluid bg-secondary">
+        <div class="container">
+            <h1 class="display-4" style="text-align: center;">EXPLORE Video Games Data</h1>
+            <br>
+            <p class="lead" style="text-align: center;">Lets find the best video game console to invest in
+                <br> with consumer and publisher habits in the gaming industry.</p>
+        </div>
     </div>
 
     <!--    Search results and charts-->
     <div class="container-fluid text-center">
-        <h2>SEARCH FOR GAME</h2>
-        <br>
+        <h3>SEARCH FOR GAME</h3>
         <hr>
         <form method='POST'>
             <input type="text" style="display:inline;" name="search_input" value="{{ request.form['search_input'] }}" placeholder="videogame"/>
-            <input type="submit" value="Submit" style="color: black; background-color: gray;">
+            <input type="submit" value="Submit" class="bg-secondary">
         </form>
 
         <br>
@@ -106,6 +109,28 @@
         {% endif %}
     </div>
 
+<canvas id="doughnut-chart" width="800" height="450"></canvas>
+    <script>
+    new Chart(document.getElementById("doughnut-chart"), {
+    type: 'doughnut',
+    data: {
+      labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
+      datasets: [
+        {
+          label: "Population (millions)",
+          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+          data: [2478,5267,734,784,433]
+        }
+      ]
+    },
+    options: {
+      title: {
+        display: true,
+        text: 'Predicted world population (millions) in 2050'
+      }
+    }
+});
+</script>
 <!--    All charts in a carousel-->
     <div class="container-fluid">
         <div class="container-fluid text-center bg-grey">

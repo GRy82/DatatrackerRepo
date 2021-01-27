@@ -36,7 +36,7 @@ def index():
     for key in console_sales:
         console_sales_num.append(console_sales[key])
 
-   # ################### #################### #################### #################### ####################
+    # ################### #################### #################### #################### ####################
     # custom question
     # Which console has the highest quantity of games made for it? Top 10
 
@@ -131,69 +131,8 @@ def index():
                         common_title_dict["platforms"].append(platform_dict)
                 # Add uniquely titled game, or set of games, to the list of unique titles.
                 unique_titles.append(common_title_dict)
-        print("Fuck Brady, Fuck Mahomes")
-
-# ########################## ########################## ########################## ##########################
-#     # Bonus alternate (maybe trash)
-#
-#     bonus_data = []
-#     all_consoles = []
-#     placeholderfordict ={}
-#     for game in all_games:
-#         if not all_consoles:
-#             placeholderfordict[game["platform"]] = 0
-#             all_consoles.append(placeholderfordict)
-#         elif game["platform"] not in all_consoles:
-#             placeholderfordict[game["platform"]] = 0
-#             all_consoles.append(placeholderfordict)
-#
-#     console_dict_bonus = {}
-#     console_dict_bonus["consoles_sales"] = placeholderfordict
-#
-#     for game in all_games:
-#         if not bonus_data:
-#             console_dict_bonus["publisher"] = game["publisher"]
-#             bonus_data.append(console_dict)
-#         elif game["publisher"] not in bonus_data:
-#             console_dict_bonus["publisher"] = game["publisher"]
-#             bonus_data.append(console_dict)
-#             for item in bonus_data["consoles_sales"]:   # work in progress. maybe trash
-#                 if game["platform"] == item["platform"]:
-#                     item["platform"] = game["platform"]
-#     print("tree")
-# ########################## ########################## ########################## ##########################
 
 
     return render_template('videogame/index.html', console_name=console_name, console_sales_num=console_sales_num,
                            top_names=top_names, top_qtys=top_qtys, search_results=search_results,
                            unique_titles=unique_titles, unique_console_dicts=unique_console_dicts)
-
-
-@bp.route('/layout_example')
-def layout_example():
-
-    response = requests.get('https://api.dccresource.com/api/games')
-    all_games = response.json()
-    recent_games = []
-
-    for game in all_games:
-        if game["year"] is not None:
-            if game["year"] >= 2013:
-                recent_games.append(game)
-
-    console_sales = {}
-    for recent_game in recent_games:
-        platform = recent_game["platform"]
-        if recent_game["platform"] not in console_sales.keys():
-            console_sales[platform] = recent_game["globalSales"]
-        else:
-            console_sales[platform] += recent_game["globalSales"]
-
-    console_name = []
-    console_sales_num = []
-
-    for key in console_sales:
-        console_name.append(key)
-        console_sales_num.append(console_sales[key])
-    return render_template('videogame/layout_example.html', console_name=console_name, console_sales_num=console_sales_num)
-
